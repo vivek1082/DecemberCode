@@ -84,14 +84,15 @@ public class BFS implements GraphTraversalI {
 
             for(EdgeNode edge : edges) {
                 int oppositeNode = edge.getAdjacencyInfo();
-                if(nodeStatus.get(oppositeNode) != PROCESSED || graph.isDirected()) {
-                    processEdge(vertex,edge.getAdjacencyInfo());
+//                if(nodeStatus.get(oppositeNode) != PROCESSED || graph.isDirected()) {
+//                    processEdge(vertex,edge.getAdjacencyInfo());
                     if(nodeStatus.get(oppositeNode) == UNDISCOVERED) {
+                        processEdge(vertex,edge.getAdjacencyInfo());
                         parentNode.set(oppositeNode,vertex);
                         nodeStatus.set(oppositeNode,DISCOVERED);
                         traversalQ.add(oppositeNode);
                     }
-                }
+//                }
 
             }
 

@@ -21,13 +21,18 @@ public class GraphMain {
         System.out.println("********Initializing Graph End*****************");
         System.out.println("************Traversing via BFS************");
         BFS bfsTraversal = new BFS(graph);
-        bfsTraversal.traverseGraph(1);
+        bfsTraversal.traverseGraph(0);
         System.out.println("************Traversing via BFS End************");
 
         System.out.println("********Start Connected Components");
         ConnectedComponents connected = new ConnectedComponents(graph);
         connected.connectedComponents();
         System.out.println("********End Connected Components");
+
+        System.out.println("********Start Graph Coloring");
+        TwoColoringBipartate colorGraph = new TwoColoringBipartate(graph);
+        colorGraph.colorGraph();
+        System.out.println("********End Graph Coloring");
 
     }
 }
