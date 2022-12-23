@@ -35,7 +35,7 @@ public class BFS implements GraphTraversalI {
     private List<Integer> parentNode; // parent node corresponding to vertex
     //above could help in tracing shortest path
     private List<TraversalDiscoveryEnum> nodeStatus;  // status of a node, initially all UNDISCOVERED
-    private List<Integer> numEdgesToEachVertexOnResultantTree;
+    private int numEdges = 0;
 
     private Queue<Integer> traversalQ;
 
@@ -56,7 +56,6 @@ public class BFS implements GraphTraversalI {
         int numVertex = graph.getVerticesNum();
         parentNode = new ArrayList<>(numVertex);
         nodeStatus = new ArrayList<>(numVertex);
-        numEdgesToEachVertexOnResultantTree = new ArrayList<>(numVertex);
 
         if(startVertex < 0 || startVertex > graph.getVerticesNum() -1 )
             throw new IllegalArgumentException("Invalid start Vertex");
@@ -64,7 +63,6 @@ public class BFS implements GraphTraversalI {
         for(int i =0; i < numVertex; i++) {
             parentNode.add(-1);         //initialize all parent at -1
             nodeStatus.add(UNDISCOVERED);  // intiaslize all vertex as undiscovered in the beginning
-            numEdgesToEachVertexOnResultantTree.add(0); // all vertex is 0 initilaly before search
         }
     }
 
@@ -81,20 +79,39 @@ public class BFS implements GraphTraversalI {
             nodeStatus.set(vertex,PROCESSED);
 
             List<EdgeNode> edges = graph.getAdjacencyList().get(vertex);
+
+            for(EdgeNode edge : edges) {
+                int oppositeNode = edge.getAdjacencyInfo();
+                if(nodeStatus.get(oppositeNode) != PROCESSED || graph.isDirected()) {
+                    processEdge(vertex,edge.getAdjacencyInfo());
+                    if(nodeStatus.get(oppositeNode) == UNDISCOVERED) {
+                        parentNode.set(oppositeNode,vertex);
+                        nodeStatus.set(oppositeNode,DISCOVERED);
+                        traversalQ.add(oppositeNode);
+                    }
+                }
+
+            }
+
+            processVertexLate(vertex);
         }
 
     }
 
     @Override
     public void processVertexEarly(int x) {
+        System.out.println("Processing vertex :: " + x);
     }
 
     @Override
     public void processVertexLate(int x) {
+        //do nothing
     }
 
     @Override
     public void processEdge(int x, int y) {
+        System.out.println("Processing edge :: " + x+ "==>" +y);
+        numEdges = numEdges+1;
     }
 
 }
