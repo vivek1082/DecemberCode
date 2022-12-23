@@ -24,7 +24,10 @@ public interface GraphTraversalI {
      */
     public void processEdge(int x, int y);
 
+    @Deprecated
     public void traverseGraph();
+
+    public void traverseGraph(int startVertex);
 
     public void initSearchComponent();
 

@@ -28,7 +28,6 @@ import java.util.concurrent.*;
  */
 public class BFS implements GraphTraversalI {
 
-    private int startVertex;
     private Graph graph;
 
     //Traverse related vars
@@ -41,8 +40,7 @@ public class BFS implements GraphTraversalI {
 
 
 
-    public BFS(int startVertex, Graph graph) {
-        this.startVertex = startVertex;
+    public BFS(Graph graph) {
         this.graph = graph;
         if(graph !=null) {
             initSearchComponent();
@@ -57,8 +55,7 @@ public class BFS implements GraphTraversalI {
         parentNode = new ArrayList<>(numVertex);
         nodeStatus = new ArrayList<>(numVertex);
 
-        if(startVertex < 0 || startVertex > graph.getVerticesNum() -1 )
-            throw new IllegalArgumentException("Invalid start Vertex");
+
 
         for(int i =0; i < numVertex; i++) {
             parentNode.add(-1);         //initialize all parent at -1
@@ -67,11 +64,16 @@ public class BFS implements GraphTraversalI {
     }
 
     @Override
-    public void traverseGraph() {
-        int start = this.startVertex; // just localizing to remember
+    public void traverseGraph() {}
+
+    @Override
+    public void traverseGraph(int startVertex) {
+        if(startVertex < 0 || startVertex > graph.getVerticesNum() -1 )
+            throw new IllegalArgumentException("Invalid start Vertex");
+
         traversalQ = new LinkedBlockingQueue<>();
-        nodeStatus.set(start,DISCOVERED);
-        traversalQ.add(start);
+        nodeStatus.set(startVertex,DISCOVERED);
+        traversalQ.add(startVertex);
 
         while( !traversalQ.isEmpty() ) {
             int vertex = traversalQ.poll();
@@ -114,4 +116,28 @@ public class BFS implements GraphTraversalI {
         numEdges = numEdges+1;
     }
 
+    public List<Integer> findPaths(int x, int y, List<Integer> parentNode) {
+        List<Integer> path = new ArrayList<>();
+        int currentPath = y;
+        path.add(y);
+        while( currentPath != x ) {
+            currentPath = parentNode.get(currentPath);
+            path.add(currentPath);
+        }
+        Collections.reverse(path);
+
+        return  path;
+    }
+
+    public List<Integer> getParentNode() {
+        return parentNode;
+    }
+
+    public Graph getGraph() {
+        return graph;
+    }
+
+    public List<TraversalDiscoveryEnum> getNodeStatus() {
+        return nodeStatus;
+    }
 }

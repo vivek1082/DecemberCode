@@ -20,9 +20,14 @@ public class GraphMain {
 
         System.out.println("********Initializing Graph End*****************");
         System.out.println("************Traversing via BFS************");
-        BFS bfsTraversal = new BFS(1,graph);
-        bfsTraversal.traverseGraph();
+        BFS bfsTraversal = new BFS(graph);
+        bfsTraversal.traverseGraph(1);
         System.out.println("************Traversing via BFS End************");
+
+        System.out.println("********Start Connected Components");
+        ConnectedComponents connected = new ConnectedComponents(graph);
+        connected.connectedComponents();
+        System.out.println("********End Connected Components");
 
     }
 }
