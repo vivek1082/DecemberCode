@@ -1,0 +1,9 @@
+# Graph sample file first line provide directed/undirected , noOfVertices and/or [edgesNum]
+## Format for first line -- space separated-- directedFlag noOfVertices [noOfEdges] -- true 4 8
+##Next remaining  line followed  space separated  edges ,  e.g 1 3 -- represents a edge from v1 to v3
+
+false 4
+0 1
+1 2
+2 3
+1 3
